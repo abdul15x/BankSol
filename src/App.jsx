@@ -308,9 +308,9 @@ function App() {
                 onClick={getWalletBalance}
                 style={{
                   padding: "12px 20px",
-                  background: "linear-gradient(135deg, #ddd6fe, #c4b5fd)",
-                  color: "#5b21b6",
-                  border: "none",
+                  background: "linear-gradient(135deg, #f8fafc, #e2e8f0)",
+                  color: "#374151",
+                  border: "1px solid #d1d5db",
                   borderRadius: "10px",
                   cursor: "pointer",
                   fontSize: "0.9rem",
@@ -363,9 +363,9 @@ function App() {
                 onClick={getBalance}
                 style={{
                   padding: "12px 20px",
-                  background: "linear-gradient(135deg, #ddd6fe, #c4b5fd)",
-                  color: "#5b21b6",
-                  border: "none",
+                  background: "linear-gradient(135deg, #f8fafc, #e2e8f0)",
+                  color: "#374151",
+                  border: "1px solid #d1d5db",
                   borderRadius: "10px",
                   cursor: "pointer",
                   fontSize: "0.9rem",
