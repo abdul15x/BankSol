@@ -146,198 +146,347 @@ function App() {
   };
 
   return (
-    <div style={{ padding: "24px", textAlign: "center", fontFamily: "Arial, sans-serif", backgroundColor: "#f8fafc", minHeight: "100vh" }}>
-      <h1 style={{ fontSize: "2.5rem", fontWeight: "bold", marginBottom: "30px", color: "#1e293b" }}>
-        🏦 SepoliaBank
-      </h1>
-      <p style={{ fontSize: "1.1rem", color: "#64748b", marginBottom: "30px" }}>
-        Your secure Sepolia testnet banking application
-      </p>
-
-      {CONTRACT_ADDRESS === "YOUR_DEPLOYED_CONTRACT_ADDRESS" && (
-        <div style={{ backgroundColor: "#fef2f2", border: "1px solid #fecaca", borderRadius: "8px", padding: "16px", marginBottom: "20px" }}>
-          <p style={{ color: "#dc2626", fontWeight: "bold" }}>⚠️ Contract address not set!</p>
-          <p style={{ color: "#7f1d1d" }}>Please update CONTRACT_ADDRESS in App.jsx with your deployed contract address.</p>
-        </div>
-      )}
-
-      {network && !isSepoliaNetwork && (
-        <div style={{ backgroundColor: "#fef2f2", border: "1px solid #fecaca", borderRadius: "8px", padding: "16px", marginBottom: "20px" }}>
-          <p style={{ color: "#dc2626", fontWeight: "bold" }}>🚨 Wrong Network!</p>
-          <p style={{ color: "#7f1d1d" }}>
-            You're connected to {network.name} (Chain ID: {network.chainId.toString()}).
-            Please switch to Sepolia testnet to use this DApp.
+    <div style={{ 
+      minHeight: "100vh", 
+      background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+      fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+      padding: "0"
+    }}>
+      {/* Header */}
+      <div style={{
+        background: "rgba(255, 255, 255, 0.1)",
+        backdropFilter: "blur(20px)",
+        borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
+        padding: "20px 0",
+        marginBottom: "40px"
+      }}>
+        <div style={{ 
+          maxWidth: "1200px", 
+          margin: "0 auto", 
+          padding: "0 24px",
+          textAlign: "center"
+        }}>
+          <h1 style={{ 
+            fontSize: "3rem", 
+            fontWeight: "700", 
+            margin: "0", 
+            color: "white",
+            textShadow: "0 2px 4px rgba(0,0,0,0.1)",
+            letterSpacing: "-0.02em"
+          }}>
+            🏦 SepoliaBank
+          </h1>
+          <p style={{ 
+            fontSize: "1.2rem", 
+            color: "rgba(255, 255, 255, 0.9)", 
+            margin: "8px 0 0 0",
+            fontWeight: "300"
+          }}>
+            Professional Digital Banking on Sepolia Testnet
           </p>
         </div>
-      )}
+      </div>
 
-      {network && isSepoliaNetwork && (
-        <div style={{ backgroundColor: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: "8px", padding: "16px", marginBottom: "20px" }}>
-          <p style={{ color: "#16a34a", fontWeight: "bold" }}>✅ Connected to Sepolia Testnet</p>
-          <p style={{ color: "#15803d" }}>Chain ID: {network.chainId.toString()}</p>
-        </div>
-      )}
-
-      <button
-        onClick={connectWallet}
-        style={{
-          margin: "8px",
-          padding: "15px 30px",
-          backgroundColor: account ? "#10b981" : "#3b82f6",
-          color: "white",
-          border: "none",
-          borderRadius: "12px",
-          cursor: "pointer",
-          fontSize: "18px",
-          fontWeight: "bold",
-          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
-        }}
-      >
-        {account ? `Connected: ${account.slice(0, 6)}...${account.slice(-4)}` : "Connect Wallet"}
-      </button>
-
-      {account && (
-        <div style={{ maxWidth: "600px", margin: "40px auto", display: "grid", gap: "20px" }}>
-          
-          {/* Account Balance Card */}
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px" }}>
+        
+        {/* Alerts */}
+        {CONTRACT_ADDRESS === "YOUR_DEPLOYED_CONTRACT_ADDRESS" && (
           <div style={{ 
-            padding: "25px", 
-            backgroundColor: "white", 
-            borderRadius: "16px",
-            border: "1px solid #e2e8f0",
-            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.05)"
+            background: "linear-gradient(135deg, #ff6b6b, #ee5a24)",
+            border: "none", 
+            borderRadius: "16px", 
+            padding: "20px", 
+            marginBottom: "24px",
+            boxShadow: "0 8px 32px rgba(255, 107, 107, 0.3)"
           }}>
-            <h3 style={{ margin: "0 0 15px 0", color: "#1e293b", fontSize: "1.3rem" }}>💰 Account Balance</h3>
-            <p style={{ fontSize: "2rem", margin: "10px 0", fontWeight: "bold", color: "#0f172a" }}>
-              {parseFloat(walletBalance).toFixed(6)} SepoliaETH
+            <p style={{ color: "white", fontWeight: "600", margin: "0 0 8px 0", fontSize: "1.1rem" }}>
+              ⚠️ Contract Configuration Required
             </p>
-            <button
-              onClick={getWalletBalance}
-              style={{
-                padding: "8px 16px",
-                backgroundColor: "#6b7280",
-                color: "white",
-                border: "none",
-                borderRadius: "8px",
-                cursor: "pointer",
-                fontSize: "14px",
-                marginTop: "10px"
-              }}
-            >
-              🔄 Refresh Balance
-            </button>
+            <p style={{ color: "rgba(255, 255, 255, 0.9)", margin: "0", lineHeight: "1.5" }}>
+              Please update CONTRACT_ADDRESS in App.jsx with your deployed contract address.
+            </p>
           </div>
+        )}
 
-          {/* Receiving Address Card */}
+        {network && !isSepoliaNetwork && (
           <div style={{ 
-            padding: "25px", 
-            backgroundColor: "white", 
-            borderRadius: "16px",
-            border: "1px solid #e2e8f0",
-            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.05)"
+            background: "linear-gradient(135deg, #ff6b6b, #ee5a24)",
+            border: "none", 
+            borderRadius: "16px", 
+            padding: "20px", 
+            marginBottom: "24px",
+            boxShadow: "0 8px 32px rgba(255, 107, 107, 0.3)"
           }}>
-            <h3 style={{ margin: "0 0 15px 0", color: "#059669", fontSize: "1.3rem" }}>📥 Your Receiving Address</h3>
+            <p style={{ color: "white", fontWeight: "600", margin: "0 0 8px 0", fontSize: "1.1rem" }}>
+              🚨 Network Mismatch
+            </p>
+            <p style={{ color: "rgba(255, 255, 255, 0.9)", margin: "0", lineHeight: "1.5" }}>
+              Connected to {network.name} (Chain ID: {network.chainId.toString()}). Please switch to Sepolia testnet.
+            </p>
+          </div>
+        )}
+
+        {network && isSepoliaNetwork && (
+          <div style={{ 
+            background: "linear-gradient(135deg, #00b894, #00cec9)",
+            border: "none", 
+            borderRadius: "16px", 
+            padding: "20px", 
+            marginBottom: "24px",
+            boxShadow: "0 8px 32px rgba(0, 184, 148, 0.3)"
+          }}>
+            <p style={{ color: "white", fontWeight: "600", margin: "0 0 4px 0", fontSize: "1.1rem" }}>
+              ✅ Connected to Sepolia Testnet
+            </p>
+            <p style={{ color: "rgba(255, 255, 255, 0.9)", margin: "0", fontSize: "0.95rem" }}>
+              Chain ID: {network.chainId.toString()}
+            </p>
+          </div>
+        )}
+
+        {/* Connect Wallet Button */}
+        <div style={{ textAlign: "center", marginBottom: "40px" }}>
+          <button
+            onClick={connectWallet}
+            style={{
+              padding: "16px 32px",
+              background: account ? "linear-gradient(135deg, #00b894, #00cec9)" : "linear-gradient(135deg, #74b9ff, #0984e3)",
+              color: "white",
+              border: "none",
+              borderRadius: "12px",
+              cursor: "pointer",
+              fontSize: "1.1rem",
+              fontWeight: "600",
+              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.15)",
+              transition: "all 0.3s ease",
+              minWidth: "280px"
+            }}
+          >
+            {account ? `Connected: ${account.slice(0, 6)}...${account.slice(-4)}` : "Connect MetaMask Wallet"}
+          </button>
+        </div>
+
+        {account && (
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", gap: "24px", marginBottom: "40px" }}>
+            
+            {/* Account Balance Card */}
             <div style={{ 
-              backgroundColor: "#f0fdf4", 
-              padding: "15px", 
-              borderRadius: "8px", 
-              border: "1px solid #bbf7d0",
-              wordBreak: "break-all",
-              fontSize: "14px",
-              fontFamily: "monospace"
+              background: "rgba(255, 255, 255, 0.95)",
+              backdropFilter: "blur(20px)",
+              borderRadius: "20px",
+              padding: "32px",
+              boxShadow: "0 20px 40px rgba(0, 0, 0, 0.1)",
+              border: "1px solid rgba(255, 255, 255, 0.2)"
             }}>
-              {account}
+              <div style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
+                <div style={{ 
+                  width: "48px", 
+                  height: "48px", 
+                  borderRadius: "12px", 
+                  background: "linear-gradient(135deg, #74b9ff, #0984e3)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginRight: "16px"
+                }}>
+                  <span style={{ fontSize: "24px" }}>💰</span>
+                </div>
+                <div>
+                  <h3 style={{ margin: "0", color: "#2d3436", fontSize: "1.25rem", fontWeight: "600" }}>
+                    Wallet Balance
+                  </h3>
+                  <p style={{ margin: "4px 0 0 0", color: "#636e72", fontSize: "0.9rem" }}>
+                    Available funds
+                  </p>
+                </div>
+              </div>
+              <p style={{ fontSize: "2.5rem", margin: "0", fontWeight: "700", color: "#2d3436", lineHeight: "1.2" }}>
+                {parseFloat(walletBalance).toFixed(6)}
+              </p>
+              <p style={{ fontSize: "1rem", margin: "8px 0 20px 0", color: "#74b9ff", fontWeight: "500" }}>
+                SepoliaETH
+              </p>
+              <button
+                onClick={getWalletBalance}
+                style={{
+                  padding: "12px 20px",
+                  background: "linear-gradient(135deg, #ddd6fe, #c4b5fd)",
+                  color: "#5b21b6",
+                  border: "none",
+                  borderRadius: "10px",
+                  cursor: "pointer",
+                  fontSize: "0.9rem",
+                  fontWeight: "500",
+                  transition: "all 0.2s ease"
+                }}
+              >
+                🔄 Refresh Balance
+              </button>
             </div>
-            <button
-              onClick={() => copyToClipboard(account)}
-              style={{
-                padding: "10px 20px",
-                backgroundColor: "#10b981",
-                color: "white",
-                border: "none",
-                borderRadius: "8px",
-                cursor: "pointer",
-                fontSize: "14px",
-                marginTop: "15px",
-                fontWeight: "bold"
-              }}
-            >
-              📋 Copy Address
-            </button>
-            <p style={{ fontSize: "0.9rem", color: "#64748b", marginTop: "10px" }}>
-              Share this address to receive SepoliaETH deposits
-            </p>
-          </div>
 
-          {/* Action Buttons */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "15px", marginTop: "20px" }}>
-            <button
-              onClick={() => setShowDepositModal(true)}
-              style={{
-                padding: "20px",
-                backgroundColor: "#10b981",
-                color: "white",
-                border: "none",
-                borderRadius: "12px",
-                cursor: "pointer",
-                fontSize: "18px",
-                fontWeight: "bold",
-                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
-              }}
-            >
-              💰 Deposit to Savings
-            </button>
-            <button
-              onClick={() => setShowWithdrawModal(true)}
-              style={{
-                padding: "20px",
-                backgroundColor: "#ef4444",
-                color: "white",
-                border: "none",
-                borderRadius: "12px",
-                cursor: "pointer",
-                fontSize: "18px",
-                fontWeight: "bold",
-                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
-              }}
-            >
-              📤 Send Money
-            </button>
+            {/* Savings Account Card */}
+            <div style={{ 
+              background: "rgba(255, 255, 255, 0.95)",
+              backdropFilter: "blur(20px)",
+              borderRadius: "20px",
+              padding: "32px",
+              boxShadow: "0 20px 40px rgba(0, 0, 0, 0.1)",
+              border: "1px solid rgba(255, 255, 255, 0.2)"
+            }}>
+              <div style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
+                <div style={{ 
+                  width: "48px", 
+                  height: "48px", 
+                  borderRadius: "12px", 
+                  background: "linear-gradient(135deg, #00b894, #00cec9)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginRight: "16px"
+                }}>
+                  <span style={{ fontSize: "24px" }}>🏦</span>
+                </div>
+                <div>
+                  <h3 style={{ margin: "0", color: "#2d3436", fontSize: "1.25rem", fontWeight: "600" }}>
+                    Savings Account
+                  </h3>
+                  <p style={{ margin: "4px 0 0 0", color: "#636e72", fontSize: "0.9rem" }}>
+                    Contract deposits
+                  </p>
+                </div>
+              </div>
+              <p style={{ fontSize: "2.5rem", margin: "0", fontWeight: "700", color: "#2d3436", lineHeight: "1.2" }}>
+                {parseFloat(balance).toFixed(6)}
+              </p>
+              <p style={{ fontSize: "1rem", margin: "8px 0 20px 0", color: "#00b894", fontWeight: "500" }}>
+                SepoliaETH
+              </p>
+              <button
+                onClick={getBalance}
+                style={{
+                  padding: "12px 20px",
+                  background: "linear-gradient(135deg, #ddd6fe, #c4b5fd)",
+                  color: "#5b21b6",
+                  border: "none",
+                  borderRadius: "10px",
+                  cursor: "pointer",
+                  fontSize: "0.9rem",
+                  fontWeight: "500",
+                  transition: "all 0.2s ease"
+                }}
+              >
+                🔄 Refresh Savings
+              </button>
+            </div>
           </div>
+        )}
 
-          {/* Contract Savings Balance */}
-          <div style={{ 
-            padding: "25px", 
-            backgroundColor: "white", 
-            borderRadius: "16px",
-            border: "1px solid #e2e8f0",
-            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.05)"
-          }}>
-            <h3 style={{ margin: "0 0 15px 0", color: "#0369a1", fontSize: "1.3rem" }}>🏦 Savings Account</h3>
-            <p style={{ fontSize: "1.8rem", margin: "10px 0", fontWeight: "bold", color: "#0c4a6e" }}>
-              {parseFloat(balance).toFixed(6)} SepoliaETH
-            </p>
-            <button
-              onClick={getBalance}
-              style={{
-                padding: "8px 16px",
-                backgroundColor: "#6b7280",
-                color: "white",
-                border: "none",
-                borderRadius: "8px",
-                cursor: "pointer",
-                fontSize: "14px",
-                marginTop: "10px"
-              }}
-            >
-              🔄 Refresh Savings
-            </button>
-            <p style={{ fontSize: "0.9rem", color: "#64748b", marginTop: "10px" }}>
-              ETH deposited in your savings contract
-            </p>
-          </div>
-        </div>
-      )}
+        {account && (
+          <>
+            {/* Receiving Address Card */}
+            <div style={{ 
+              background: "rgba(255, 255, 255, 0.95)",
+              backdropFilter: "blur(20px)",
+              borderRadius: "20px",
+              padding: "32px",
+              marginBottom: "32px",
+              boxShadow: "0 20px 40px rgba(0, 0, 0, 0.1)",
+              border: "1px solid rgba(255, 255, 255, 0.2)"
+            }}>
+              <div style={{ display: "flex", alignItems: "center", marginBottom: "24px" }}>
+                <div style={{ 
+                  width: "48px", 
+                  height: "48px", 
+                  borderRadius: "12px", 
+                  background: "linear-gradient(135deg, #fdcb6e, #e17055)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginRight: "16px"
+                }}>
+                  <span style={{ fontSize: "24px" }}>📥</span>
+                </div>
+                <div>
+                  <h3 style={{ margin: "0", color: "#2d3436", fontSize: "1.25rem", fontWeight: "600" }}>
+                    Your Receiving Address
+                  </h3>
+                  <p style={{ margin: "4px 0 0 0", color: "#636e72", fontSize: "0.9rem" }}>
+                    Share this address to receive payments
+                  </p>
+                </div>
+              </div>
+              <div style={{ 
+                background: "linear-gradient(135deg, #f8f9fa, #e9ecef)",
+                padding: "20px", 
+                borderRadius: "12px", 
+                border: "2px solid #e9ecef",
+                wordBreak: "break-all",
+                fontSize: "1rem",
+                fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
+                color: "#495057",
+                marginBottom: "20px"
+              }}>
+                {account}
+              </div>
+              <button
+                onClick={() => copyToClipboard(account)}
+                style={{
+                  padding: "14px 28px",
+                  background: "linear-gradient(135deg, #fdcb6e, #e17055)",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "12px",
+                  cursor: "pointer",
+                  fontSize: "1rem",
+                  fontWeight: "600",
+                  boxShadow: "0 4px 16px rgba(253, 203, 110, 0.3)",
+                  transition: "all 0.2s ease"
+                }}
+              >
+                📋 Copy Address
+              </button>
+            </div>
+
+            {/* Action Buttons */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", marginBottom: "40px" }}>
+              <button
+                onClick={() => setShowDepositModal(true)}
+                style={{
+                  padding: "24px",
+                  background: "linear-gradient(135deg, #00b894, #00cec9)",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "16px",
+                  cursor: "pointer",
+                  fontSize: "1.2rem",
+                  fontWeight: "600",
+                  boxShadow: "0 8px 32px rgba(0, 184, 148, 0.3)",
+                  transition: "all 0.3s ease"
+                }}
+              >
+                💰 Deposit to Savings
+              </button>
+              <button
+                onClick={() => setShowWithdrawModal(true)}
+                style={{
+                  padding: "24px",
+                  background: "linear-gradient(135deg, #ff7675, #e84393)",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "16px",
+                  cursor: "pointer",
+                  fontSize: "1.2rem",
+                  fontWeight: "600",
+                  boxShadow: "0 8px 32px rgba(255, 118, 117, 0.3)",
+                  transition: "all 0.3s ease"
+                }}
+              >
+                📤 Send Money
+              </button>
+            </div>
+          </>
+        )}
+      </div>
 
       {/* Deposit Modal */}
       {showDepositModal && (
@@ -347,26 +496,53 @@ function App() {
           left: "0",
           width: "100%",
           height: "100%",
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          background: "rgba(0, 0, 0, 0.6)",
+          backdropFilter: "blur(10px)",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          zIndex: "1000"
+          zIndex: "1000",
+          padding: "20px"
         }}>
           <div style={{
-            backgroundColor: "white",
-            padding: "30px",
-            borderRadius: "16px",
-            width: "90%",
-            maxWidth: "400px",
-            boxShadow: "0 10px 25px rgba(0, 0, 0, 0.1)"
+            background: "white",
+            padding: "40px",
+            borderRadius: "24px",
+            width: "100%",
+            maxWidth: "480px",
+            boxShadow: "0 20px 60px rgba(0, 0, 0, 0.3)",
+            border: "1px solid rgba(255, 255, 255, 0.2)"
           }}>
-            <h3 style={{ margin: "0 0 20px 0", color: "#10b981", fontSize: "1.5rem" }}>💰 Deposit to Savings</h3>
-            <p style={{ color: "#64748b", marginBottom: "20px" }}>
-              Move ETH from your wallet to your savings account
-            </p>
-            <div style={{ marginBottom: "20px" }}>
-              <label style={{ display: "block", marginBottom: "8px", fontWeight: "bold", color: "#374151" }}>
+            <div style={{ display: "flex", alignItems: "center", marginBottom: "24px" }}>
+              <div style={{ 
+                width: "56px", 
+                height: "56px", 
+                borderRadius: "16px", 
+                background: "linear-gradient(135deg, #00b894, #00cec9)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginRight: "16px"
+              }}>
+                <span style={{ fontSize: "28px" }}>💰</span>
+              </div>
+              <div>
+                <h3 style={{ margin: "0", color: "#2d3436", fontSize: "1.5rem", fontWeight: "700" }}>
+                  Deposit to Savings
+                </h3>
+                <p style={{ margin: "4px 0 0 0", color: "#636e72", fontSize: "1rem" }}>
+                  Move ETH to your savings account
+                </p>
+              </div>
+            </div>
+            <div style={{ marginBottom: "24px" }}>
+              <label style={{ 
+                display: "block", 
+                marginBottom: "12px", 
+                fontWeight: "600", 
+                color: "#2d3436",
+                fontSize: "1rem"
+              }}>
                 Amount (ETH)
               </label>
               <input
@@ -377,27 +553,30 @@ function App() {
                 onChange={(e) => setDepositAmount(e.target.value)}
                 style={{
                   width: "100%",
-                  padding: "12px",
-                  border: "2px solid #d1d5db",
-                  borderRadius: "8px",
-                  fontSize: "16px",
+                  padding: "16px",
+                  border: "2px solid #e9ecef",
+                  borderRadius: "12px",
+                  fontSize: "1.1rem",
                   outline: "none",
-                  boxSizing: "border-box"
+                  boxSizing: "border-box",
+                  transition: "border-color 0.2s ease",
+                  fontFamily: "'JetBrains Mono', monospace"
                 }}
               />
             </div>
-            <div style={{ display: "flex", gap: "10px" }}>
+            <div style={{ display: "flex", gap: "16px" }}>
               <button
                 onClick={() => setShowDepositModal(false)}
                 style={{
                   flex: "1",
-                  padding: "12px",
-                  backgroundColor: "#6b7280",
-                  color: "white",
+                  padding: "16px",
+                  background: "#ddd6fe",
+                  color: "#5b21b6",
                   border: "none",
-                  borderRadius: "8px",
+                  borderRadius: "12px",
                   cursor: "pointer",
-                  fontSize: "16px"
+                  fontSize: "1rem",
+                  fontWeight: "600"
                 }}
               >
                 Cancel
@@ -406,14 +585,15 @@ function App() {
                 onClick={deposit}
                 style={{
                   flex: "1",
-                  padding: "12px",
-                  backgroundColor: "#10b981",
+                  padding: "16px",
+                  background: "linear-gradient(135deg, #00b894, #00cec9)",
                   color: "white",
                   border: "none",
-                  borderRadius: "8px",
+                  borderRadius: "12px",
                   cursor: "pointer",
-                  fontSize: "16px",
-                  fontWeight: "bold"
+                  fontSize: "1rem",
+                  fontWeight: "600",
+                  boxShadow: "0 4px 16px rgba(0, 184, 148, 0.3)"
                 }}
               >
                 Deposit
@@ -431,26 +611,53 @@ function App() {
           left: "0",
           width: "100%",
           height: "100%",
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          background: "rgba(0, 0, 0, 0.6)",
+          backdropFilter: "blur(10px)",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          zIndex: "1000"
+          zIndex: "1000",
+          padding: "20px"
         }}>
           <div style={{
-            backgroundColor: "white",
-            padding: "30px",
-            borderRadius: "16px",
-            width: "90%",
-            maxWidth: "400px",
-            boxShadow: "0 10px 25px rgba(0, 0, 0, 0.1)"
+            background: "white",
+            padding: "40px",
+            borderRadius: "24px",
+            width: "100%",
+            maxWidth: "480px",
+            boxShadow: "0 20px 60px rgba(0, 0, 0, 0.3)",
+            border: "1px solid rgba(255, 255, 255, 0.2)"
           }}>
-            <h3 style={{ margin: "0 0 20px 0", color: "#ef4444", fontSize: "1.5rem" }}>📤 Send Money</h3>
-            <p style={{ color: "#64748b", marginBottom: "20px" }}>
-              Send ETH from your wallet to another address
-            </p>
-            <div style={{ marginBottom: "15px" }}>
-              <label style={{ display: "block", marginBottom: "8px", fontWeight: "bold", color: "#374151" }}>
+            <div style={{ display: "flex", alignItems: "center", marginBottom: "24px" }}>
+              <div style={{ 
+                width: "56px", 
+                height: "56px", 
+                borderRadius: "16px", 
+                background: "linear-gradient(135deg, #ff7675, #e84393)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginRight: "16px"
+              }}>
+                <span style={{ fontSize: "28px" }}>📤</span>
+              </div>
+              <div>
+                <h3 style={{ margin: "0", color: "#2d3436", fontSize: "1.5rem", fontWeight: "700" }}>
+                  Send Money
+                </h3>
+                <p style={{ margin: "4px 0 0 0", color: "#636e72", fontSize: "1rem" }}>
+                  Transfer ETH to another address
+                </p>
+              </div>
+            </div>
+            <div style={{ marginBottom: "20px" }}>
+              <label style={{ 
+                display: "block", 
+                marginBottom: "12px", 
+                fontWeight: "600", 
+                color: "#2d3436",
+                fontSize: "1rem"
+              }}>
                 Recipient Address
               </label>
               <input
@@ -460,18 +667,25 @@ function App() {
                 onChange={(e) => setWithdrawAddress(e.target.value)}
                 style={{
                   width: "100%",
-                  padding: "12px",
-                  border: "2px solid #d1d5db",
-                  borderRadius: "8px",
-                  fontSize: "16px",
+                  padding: "16px",
+                  border: "2px solid #e9ecef",
+                  borderRadius: "12px",
+                  fontSize: "1rem",
                   outline: "none",
                   boxSizing: "border-box",
-                  fontFamily: "monospace"
+                  fontFamily: "'JetBrains Mono', monospace",
+                  transition: "border-color 0.2s ease"
                 }}
               />
             </div>
-            <div style={{ marginBottom: "20px" }}>
-              <label style={{ display: "block", marginBottom: "8px", fontWeight: "bold", color: "#374151" }}>
+            <div style={{ marginBottom: "24px" }}>
+              <label style={{ 
+                display: "block", 
+                marginBottom: "12px", 
+                fontWeight: "600", 
+                color: "#2d3436",
+                fontSize: "1rem"
+              }}>
                 Amount (ETH)
               </label>
               <input
@@ -482,27 +696,30 @@ function App() {
                 onChange={(e) => setWithdrawAmount(e.target.value)}
                 style={{
                   width: "100%",
-                  padding: "12px",
-                  border: "2px solid #d1d5db",
-                  borderRadius: "8px",
-                  fontSize: "16px",
+                  padding: "16px",
+                  border: "2px solid #e9ecef",
+                  borderRadius: "12px",
+                  fontSize: "1.1rem",
                   outline: "none",
-                  boxSizing: "border-box"
+                  boxSizing: "border-box",
+                  fontFamily: "'JetBrains Mono', monospace",
+                  transition: "border-color 0.2s ease"
                 }}
               />
             </div>
-            <div style={{ display: "flex", gap: "10px" }}>
+            <div style={{ display: "flex", gap: "16px" }}>
               <button
                 onClick={() => setShowWithdrawModal(false)}
                 style={{
                   flex: "1",
-                  padding: "12px",
-                  backgroundColor: "#6b7280",
-                  color: "white",
+                  padding: "16px",
+                  background: "#ddd6fe",
+                  color: "#5b21b6",
                   border: "none",
-                  borderRadius: "8px",
+                  borderRadius: "12px",
                   cursor: "pointer",
-                  fontSize: "16px"
+                  fontSize: "1rem",
+                  fontWeight: "600"
                 }}
               >
                 Cancel
@@ -511,14 +728,15 @@ function App() {
                 onClick={withdraw}
                 style={{
                   flex: "1",
-                  padding: "12px",
-                  backgroundColor: "#ef4444",
+                  padding: "16px",
+                  background: "linear-gradient(135deg, #ff7675, #e84393)",
                   color: "white",
                   border: "none",
-                  borderRadius: "8px",
+                  borderRadius: "12px",
                   cursor: "pointer",
-                  fontSize: "16px",
-                  fontWeight: "bold"
+                  fontSize: "1rem",
+                  fontWeight: "600",
+                  boxShadow: "0 4px 16px rgba(255, 118, 117, 0.3)"
                 }}
               >
                 Send
