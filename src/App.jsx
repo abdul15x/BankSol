@@ -177,7 +177,7 @@ function App() {
           </h1>
           <p style={{ 
             fontSize: "1.2rem", 
-            color: "#64748b", 
+            color: "rgba(255, 255, 255, 0.9)", 
             margin: "8px 0 0 0",
             fontWeight: "300"
           }}>
@@ -309,9 +309,9 @@ function App() {
                 onClick={getWalletBalance}
                 style={{
                   padding: "12px 20px",
-                  background: "linear-gradient(135deg, #ffffff, #f1f5f9)",
-                  color: "#475569",
-                  border: "1px solid #e2e8f0",
+                  background: "linear-gradient(135deg, #ddd6fe, #c4b5fd)",
+                  color: "#5b21b6",
+                  border: "none",
                   borderRadius: "10px",
                   cursor: "pointer",
                   fontSize: "0.9rem",
@@ -364,9 +364,9 @@ function App() {
                 onClick={getBalance}
                 style={{
                   padding: "12px 20px",
-                  background: "linear-gradient(135deg, #ffffff, #f1f5f9)",
-                  color: "#475569",
-                  border: "1px solid #e2e8f0",
+                  background: "linear-gradient(135deg, #ddd6fe, #c4b5fd)",
+                  color: "#5b21b6",
+                  border: "none",
                   borderRadius: "10px",
                   cursor: "pointer",
                   fontSize: "0.9rem",
