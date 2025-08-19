@@ -147,15 +147,14 @@ function App() {
   return (
     <div style={{ 
       minHeight: "100vh", 
-      background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+      background: "#ffffff",
       fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
       padding: "0"
     }}>
       {/* Header */}
       <div style={{
-        background: "rgba(255, 255, 255, 0.1)",
-        backdropFilter: "blur(20px)",
-        borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
+        background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+        borderBottom: "1px solid #e2e8f0",
         padding: "20px 0",
         marginBottom: "40px"
       }}>
