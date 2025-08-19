@@ -8,6 +8,7 @@ export default defineConfig({
   base: '/simplebank-dapp/',
   server: {
     host: '0.0.0.0',
-    port: 5173
+    port: 5173,
+    allowedHosts: ['all']
   }
 })
