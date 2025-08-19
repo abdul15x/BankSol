@@ -291,7 +291,7 @@ function App() {
       }}>
         <h3 style={{ margin: "0 0 10px 0", color: "#0369a1" }}>💎 Your Balance</h3>
         <p style={{ fontSize: "1.5rem", margin: "0", fontWeight: "bold", color: "#0c4a6e" }}>
-          {balance} ETH
+          {parseFloat(balance).toFixed(10)} ETH
         </p>
       </div>
     </div>
