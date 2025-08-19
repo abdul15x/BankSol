@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ethers } from "ethers";
 import SimpleBankABI from "./contracts/SimpleBank.json";
 
-const CONTRACT_ADDRESS = "YOUR_DEPLOYED_CONTRACT_ADDRESS";
+const CONTRACT_ADDRESS = "0x5CBa5340C5FF25B820F20B2A2D06C2c1BAed2718";
 
 function App() {
   const [account, setAccount] = useState(null);
@@ -26,14 +26,20 @@ function App() {
   // Deposit
   async function deposit() {
     if (CONTRACT_ADDRESS === "YOUR_DEPLOYED_CONTRACT_ADDRESS") {
-      alert("Please update the CONTRACT_ADDRESS in App.jsx with your deployed contract address");
+      alert(
+        "Please update the CONTRACT_ADDRESS in App.jsx with your deployed contract address",
+      );
       return;
     }
     if (!window.ethereum) return;
     try {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
-      const contract = new ethers.Contract(CONTRACT_ADDRESS, SimpleBankABI, signer);
+      const contract = new ethers.Contract(
+        CONTRACT_ADDRESS,
+        SimpleBankABI,
+        signer,
+      );
 
       const tx = await contract.deposit({ value: ethers.parseEther("0.01") });
       await tx.wait();
@@ -46,14 +52,20 @@ function App() {
   // Withdraw
   async function withdraw() {
     if (CONTRACT_ADDRESS === "YOUR_DEPLOYED_CONTRACT_ADDRESS") {
-      alert("Please update the CONTRACT_ADDRESS in App.jsx with your deployed contract address");
+      alert(
+        "Please update the CONTRACT_ADDRESS in App.jsx with your deployed contract address",
+      );
       return;
     }
     if (!window.ethereum) return;
     try {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
-      const contract = new ethers.Contract(CONTRACT_ADDRESS, SimpleBankABI, signer);
+      const contract = new ethers.Contract(
+        CONTRACT_ADDRESS,
+        SimpleBankABI,
+        signer,
+      );
 
       const tx = await contract.withdraw(ethers.parseEther("0.005"));
       await tx.wait();
@@ -66,13 +78,19 @@ function App() {
   // Get balance
   async function getBalance() {
     if (CONTRACT_ADDRESS === "YOUR_DEPLOYED_CONTRACT_ADDRESS") {
-      alert("Please update the CONTRACT_ADDRESS in App.jsx with your deployed contract address");
+      alert(
+        "Please update the CONTRACT_ADDRESS in App.jsx with your deployed contract address",
+      );
       return;
     }
     if (!window.ethereum) return;
     try {
       const provider = new ethers.BrowserProvider(window.ethereum);
-      const contract = new ethers.Contract(CONTRACT_ADDRESS, SimpleBankABI, provider);
+      const contract = new ethers.Contract(
+        CONTRACT_ADDRESS,
+        SimpleBankABI,
+        provider,
+      );
 
       const bal = await contract.balance();
       setBalance(ethers.formatEther(bal));
@@ -82,81 +100,106 @@ function App() {
   }
 
   return (
-    <div style={{ padding: "24px", textAlign: "center", fontFamily: "Arial, sans-serif" }}>
-      <h1 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "20px" }}>💰 SimpleBank DApp</h1>
-      
+    <div
+      style={{
+        padding: "24px",
+        textAlign: "center",
+        fontFamily: "Arial, sans-serif",
+      }}
+    >
+      <h1
+        style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "20px" }}
+      >
+        💰 SimpleBank DApp
+      </h1>
+
       {CONTRACT_ADDRESS === "YOUR_DEPLOYED_CONTRACT_ADDRESS" && (
-        <div style={{ backgroundColor: "#fef2f2", border: "1px solid #fecaca", borderRadius: "8px", padding: "16px", marginBottom: "20px" }}>
-          <p style={{ color: "#dc2626", fontWeight: "bold" }}>⚠️ Contract address not set!</p>
-          <p style={{ color: "#7f1d1d" }}>Please update CONTRACT_ADDRESS in App.jsx with your deployed contract address.</p>
+        <div
+          style={{
+            backgroundColor: "#fef2f2",
+            border: "1px solid #fecaca",
+            borderRadius: "8px",
+            padding: "16px",
+            marginBottom: "20px",
+          }}
+        >
+          <p style={{ color: "#dc2626", fontWeight: "bold" }}>
+            ⚠️ Contract address not set!
+          </p>
+          <p style={{ color: "#7f1d1d" }}>
+            Please update CONTRACT_ADDRESS in App.jsx with your deployed
+            contract address.
+          </p>
         </div>
       )}
-      
-      <button 
-        onClick={connectWallet} 
-        style={{ 
-          margin: "8px", 
-          padding: "12px 24px", 
-          backgroundColor: "#3b82f6", 
-          color: "white", 
-          border: "none", 
-          borderRadius: "8px", 
+
+      <button
+        onClick={connectWallet}
+        style={{
+          margin: "8px",
+          padding: "12px 24px",
+          backgroundColor: "#3b82f6",
+          color: "white",
+          border: "none",
+          borderRadius: "8px",
           cursor: "pointer",
-          fontSize: "16px"
+          fontSize: "16px",
         }}
       >
         {account ? `Connected: ${account.slice(0, 6)}...` : "Connect Wallet"}
       </button>
-      
+
       <div style={{ margin: "20px 0" }}>
-        <button 
-          onClick={deposit} 
-          style={{ 
-            margin: "8px", 
-            padding: "12px 24px", 
-            backgroundColor: "#10b981", 
-            color: "white", 
-            border: "none", 
-            borderRadius: "8px", 
+        <button
+          onClick={deposit}
+          style={{
+            margin: "8px",
+            padding: "12px 24px",
+            backgroundColor: "#10b981",
+            color: "white",
+            border: "none",
+            borderRadius: "8px",
             cursor: "pointer",
-            fontSize: "16px"
+            fontSize: "16px",
           }}
         >
           Deposit 0.01 ETH
         </button>
-        <button 
-          onClick={withdraw} 
-          style={{ 
-            margin: "8px", 
-            padding: "12px 24px", 
-            backgroundColor: "#ef4444", 
-            color: "white", 
-            border: "none", 
-            borderRadius: "8px", 
+        <button
+          onClick={withdraw}
+          style={{
+            margin: "8px",
+            padding: "12px 24px",
+            backgroundColor: "#ef4444",
+            color: "white",
+            border: "none",
+            borderRadius: "8px",
             cursor: "pointer",
-            fontSize: "16px"
+            fontSize: "16px",
           }}
         >
           Withdraw 0.005 ETH
         </button>
-        <button 
-          onClick={getBalance} 
-          style={{ 
-            margin: "8px", 
-            padding: "12px 24px", 
-            backgroundColor: "#6b7280", 
-            color: "white", 
-            border: "none", 
-            borderRadius: "8px", 
+        <button
+          onClick={getBalance}
+          style={{
+            margin: "8px",
+            padding: "12px 24px",
+            backgroundColor: "#6b7280",
+            color: "white",
+            border: "none",
+            borderRadius: "8px",
             cursor: "pointer",
-            fontSize: "16px"
+            fontSize: "16px",
           }}
         >
           Check Balance
         </button>
       </div>
-      
-      <p style={{ fontSize: "1.25rem", marginTop: "20px" }}>Balance: {balance} ETH</p>
+
+      <p style={{ fontSize: "1.25rem", marginTop: "20px" }}>
+        Balance: {balance} ETH
+      </p>
     </div>
   );
 }
