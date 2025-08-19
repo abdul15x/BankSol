@@ -1,14 +1,17 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+// vite.config.js
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
-// Update this with your repo name if deploying to GitHub Pages
-// Example: if repo = simplebank-dapp → base: '/simplebank-dapp/'
 export default defineConfig({
   plugins: [react()],
-  base: '/simplebank-dapp/',
   server: {
-    host: '0.0.0.0',
-    port: 5173,
-    allowedHosts: ['all']
-  }
-})
+    host: "0.0.0.0", // required for Replit
+    port: 3000,      // Replit expects port 3000
+    allowedHosts: [
+      // allow your Replit preview host dynamically
+      ".replit.dev",
+      ".pike.replit.dev"
+    ],
+  },
+  base: "./", // makes it work later on GitHub Pages too
+});
