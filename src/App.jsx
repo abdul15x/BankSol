@@ -153,7 +153,7 @@ function App() {
     }}>
       {/* Header */}
       <div style={{
-        background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+        background: "linear-gradient(135deg, #374151 0%, #6b7280 100%)",
         borderBottom: "1px solid #e2e8f0",
         padding: "20px 0",
         marginBottom: "40px"
