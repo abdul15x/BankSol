@@ -7,6 +7,8 @@ const CONTRACT_ADDRESS = "0x5CBa5340C5FF25B820F20B2A2D06C2c1BAed2718";
 function App() {
   const [account, setAccount] = useState(null);
   const [balance, setBalance] = useState("0");
+  const [depositAmount, setDepositAmount] = useState("");
+  const [withdrawAmount, setWithdrawAmount] = useState("");
 
   // Connect wallet
   async function connectWallet() {
@@ -32,6 +34,10 @@ function App() {
       return;
     }
     if (!window.ethereum) return;
+    if (!depositAmount || parseFloat(depositAmount) <= 0) {
+      alert("Please enter a valid deposit amount");
+      return;
+    }
     try {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
@@ -41,11 +47,14 @@ function App() {
         signer,
       );
 
-      const tx = await contract.deposit({ value: ethers.parseEther("0.01") });
+      const tx = await contract.deposit({ value: ethers.parseEther(depositAmount) });
       await tx.wait();
+      setDepositAmount("");
       getBalance();
+      alert("Deposit successful!");
     } catch (error) {
       console.error("Error depositing:", error);
+      alert("Error depositing: " + error.message);
     }
   }
 
@@ -58,6 +67,14 @@ function App() {
       return;
     }
     if (!window.ethereum) return;
+    if (!withdrawAmount || parseFloat(withdrawAmount) <= 0) {
+      alert("Please enter a valid withdrawal amount");
+      return;
+    }
+    if (parseFloat(withdrawAmount) > parseFloat(balance)) {
+      alert("Insufficient balance");
+      return;
+    }
     try {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
@@ -67,11 +84,14 @@ function App() {
         signer,
       );
 
-      const tx = await contract.withdraw(ethers.parseEther("0.005"));
+      const tx = await contract.withdraw(ethers.parseEther(withdrawAmount));
       await tx.wait();
+      setWithdrawAmount("");
       getBalance();
+      alert("Withdrawal successful!");
     } catch (error) {
       console.error("Error withdrawing:", error);
+      alert("Error withdrawing: " + error.message);
     }
   }
 
@@ -149,41 +169,102 @@ function App() {
         {account ? `Connected: ${account.slice(0, 6)}...` : "Connect Wallet"}
       </button>
 
-      <div style={{ margin: "20px 0" }}>
-        <button
-          onClick={deposit}
-          style={{
-            margin: "8px",
-            padding: "12px 24px",
-            backgroundColor: "#10b981",
-            color: "white",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
-            fontSize: "16px",
-          }}
-        >
-          Deposit 0.01 ETH
-        </button>
-        <button
-          onClick={withdraw}
-          style={{
-            margin: "8px",
-            padding: "12px 24px",
-            backgroundColor: "#ef4444",
-            color: "white",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
-            fontSize: "16px",
-          }}
-        >
-          Withdraw 0.005 ETH
-        </button>
+      <div style={{ margin: "20px 0", maxWidth: "400px", marginLeft: "auto", marginRight: "auto" }}>
+        {/* Deposit Section */}
+        <div style={{ 
+          marginBottom: "20px", 
+          padding: "20px", 
+          backgroundColor: "#f8f9fa", 
+          borderRadius: "12px",
+          border: "1px solid #e9ecef"
+        }}>
+          <h3 style={{ margin: "0 0 15px 0", color: "#10b981" }}>💰 Deposit ETH</h3>
+          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+            <input
+              type="number"
+              step="0.001"
+              placeholder="0.01"
+              value={depositAmount}
+              onChange={(e) => setDepositAmount(e.target.value)}
+              style={{
+                flex: "1",
+                padding: "12px",
+                border: "2px solid #d1d5db",
+                borderRadius: "8px",
+                fontSize: "16px",
+                outline: "none",
+              }}
+            />
+            <span style={{ fontSize: "16px", fontWeight: "bold" }}>ETH</span>
+            <button
+              onClick={deposit}
+              disabled={!account}
+              style={{
+                padding: "12px 20px",
+                backgroundColor: account ? "#10b981" : "#9ca3af",
+                color: "white",
+                border: "none",
+                borderRadius: "8px",
+                cursor: account ? "pointer" : "not-allowed",
+                fontSize: "16px",
+                fontWeight: "bold",
+              }}
+            >
+              Deposit
+            </button>
+          </div>
+        </div>
+
+        {/* Withdraw Section */}
+        <div style={{ 
+          marginBottom: "20px", 
+          padding: "20px", 
+          backgroundColor: "#f8f9fa", 
+          borderRadius: "12px",
+          border: "1px solid #e9ecef"
+        }}>
+          <h3 style={{ margin: "0 0 15px 0", color: "#ef4444" }}>🏦 Withdraw ETH</h3>
+          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+            <input
+              type="number"
+              step="0.001"
+              placeholder="0.005"
+              value={withdrawAmount}
+              onChange={(e) => setWithdrawAmount(e.target.value)}
+              style={{
+                flex: "1",
+                padding: "12px",
+                border: "2px solid #d1d5db",
+                borderRadius: "8px",
+                fontSize: "16px",
+                outline: "none",
+              }}
+            />
+            <span style={{ fontSize: "16px", fontWeight: "bold" }}>ETH</span>
+            <button
+              onClick={withdraw}
+              disabled={!account}
+              style={{
+                padding: "12px 20px",
+                backgroundColor: account ? "#ef4444" : "#9ca3af",
+                color: "white",
+                border: "none",
+                borderRadius: "8px",
+                cursor: account ? "pointer" : "not-allowed",
+                fontSize: "16px",
+                fontWeight: "bold",
+              }}
+            >
+              Withdraw
+            </button>
+          </div>
+        </div>
+
+        {/* Balance Section */}
         <button
           onClick={getBalance}
           style={{
-            margin: "8px",
+            width: "100%",
             padding: "12px 24px",
             backgroundColor: "#6b7280",
             color: "white",
@@ -191,15 +272,28 @@ function App() {
             borderRadius: "8px",
             cursor: "pointer",
             fontSize: "16px",
+            fontWeight: "bold",
           }}
         >
-          Check Balance
+          🔍 Refresh Balance
         </button>
       </div>
 
-      <p style={{ fontSize: "1.25rem", marginTop: "20px" }}>
-        Balance: {balance} ETH
-      </p>
+      <div style={{ 
+        marginTop: "20px", 
+        padding: "20px", 
+        backgroundColor: "#f0f9ff", 
+        borderRadius: "12px",
+        border: "2px solid #0ea5e9",
+        maxWidth: "400px",
+        marginLeft: "auto",
+        marginRight: "auto"
+      }}>
+        <h3 style={{ margin: "0 0 10px 0", color: "#0369a1" }}>💎 Your Balance</h3>
+        <p style={{ fontSize: "1.5rem", margin: "0", fontWeight: "bold", color: "#0c4a6e" }}>
+          {balance} ETH
+        </p>
+      </div>
     </div>
   );
 }
