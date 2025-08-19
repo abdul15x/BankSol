@@ -7,6 +7,7 @@ const CONTRACT_ADDRESS = "0x5CBa5340C5FF25B820F20B2A2D06C2c1BAed2718";
 function App() {
   const [account, setAccount] = useState(null);
   const [balance, setBalance] = useState("0");
+  const [walletBalance, setWalletBalance] = useState("0");
   const [depositAmount, setDepositAmount] = useState("");
   const [withdrawAmount, setWithdrawAmount] = useState("");
   const [network, setNetwork] = useState(null);
@@ -107,7 +108,7 @@ function App() {
     }
   }
 
-  // Get balance
+  // Get contract balance
   async function getBalance() {
     if (CONTRACT_ADDRESS === "YOUR_DEPLOYED_CONTRACT_ADDRESS") {
       alert(
@@ -127,7 +128,19 @@ function App() {
       const bal = await contract.balance();
       setBalance(ethers.formatEther(bal));
     } catch (error) {
-      console.error("Error getting balance:", error);
+      console.error("Error getting contract balance:", error);
+    }
+  }
+
+  // Get wallet balance
+  async function getWalletBalance() {
+    if (!window.ethereum || !account) return;
+    try {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const balance = await provider.getBalance(account);
+      setWalletBalance(ethers.formatEther(balance));
+    } catch (error) {
+      console.error("Error getting wallet balance:", error);
     }
   }
 
@@ -312,24 +325,63 @@ function App() {
         </div>
 
         {/* Balance Section */}
-        <button
-          onClick={getBalance}
-          style={{
-            width: "100%",
-            padding: "12px 24px",
-            backgroundColor: "#6b7280",
-            color: "white",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
-            fontSize: "16px",
-            fontWeight: "bold",
-          }}
-        >
-          🔍 Refresh Balance
-        </button>
+        <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
+          <button
+            onClick={getBalance}
+            style={{
+              flex: "1",
+              padding: "12px 16px",
+              backgroundColor: "#6b7280",
+              color: "white",
+              border: "none",
+              borderRadius: "8px",
+              cursor: "pointer",
+              fontSize: "14px",
+              fontWeight: "bold",
+            }}
+          >
+            🏦 Refresh Contract Balance
+          </button>
+          <button
+            onClick={getWalletBalance}
+            style={{
+              flex: "1",
+              padding: "12px 16px",
+              backgroundColor: "#3b82f6",
+              color: "white",
+              border: "none",
+              borderRadius: "8px",
+              cursor: "pointer",
+              fontSize: "14px",
+              fontWeight: "bold",
+            }}
+          >
+            💰 Refresh Wallet Balance
+          </button>
+        </div>
       </div>
 
+      {/* Wallet Balance */}
+      <div style={{ 
+        marginTop: "20px", 
+        padding: "20px", 
+        backgroundColor: "#f0fdf4", 
+        borderRadius: "12px",
+        border: "2px solid #10b981",
+        maxWidth: "400px",
+        marginLeft: "auto",
+        marginRight: "auto"
+      }}>
+        <h3 style={{ margin: "0 0 10px 0", color: "#059669" }}>💰 Your Wallet Balance</h3>
+        <p style={{ fontSize: "1.5rem", margin: "0", fontWeight: "bold", color: "#065f46" }}>
+          {parseFloat(walletBalance).toFixed(10)} SepoliaETH
+        </p>
+        <p style={{ fontSize: "0.9rem", margin: "5px 0 0 0", color: "#64748b" }}>
+          Available in your wallet for transactions
+        </p>
+      </div>
+
+      {/* Contract Balance */}
       <div style={{ 
         marginTop: "20px", 
         padding: "20px", 
@@ -340,9 +392,12 @@ function App() {
         marginLeft: "auto",
         marginRight: "auto"
       }}>
-        <h3 style={{ margin: "0 0 10px 0", color: "#0369a1" }}>💎 Your Sepolia Balance</h3>
+        <h3 style={{ margin: "0 0 10px 0", color: "#0369a1" }}>🏦 Your Contract Balance</h3>
         <p style={{ fontSize: "1.5rem", margin: "0", fontWeight: "bold", color: "#0c4a6e" }}>
           {parseFloat(balance).toFixed(10)} SepoliaETH
+        </p>
+        <p style={{ fontSize: "0.9rem", margin: "5px 0 0 0", color: "#64748b" }}>
+          Deposited in the SimpleBank contract
         </p>
         {network && (
           <p style={{ fontSize: "0.9rem", margin: "5px 0 0 0", color: "#64748b" }}>
