@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { ethers } from "ethers";
 import SimpleBankABI from "./contracts/SimpleBank.json";
@@ -24,13 +23,13 @@ function App() {
         const provider = new ethers.BrowserProvider(window.ethereum);
         const accounts = await provider.send("eth_requestAccounts", []);
         setAccount(accounts[0]);
-        
+
         // Check network
         const network = await provider.getNetwork();
         setNetwork(network);
         const isSepolia = network.chainId === 11155111n; // Sepolia chainId
         setIsSepoliaNetwork(isSepolia);
-        
+
         if (!isSepolia) {
           alert("Please switch to Sepolia testnet for this DApp to work properly!");
         }
@@ -90,17 +89,17 @@ function App() {
       alert("Insufficient wallet balance");
       return;
     }
-    
+
     try {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
-      
+
       // Send ETH directly to the specified address
       const tx = await signer.sendTransaction({
         to: withdrawAddress,
         value: ethers.parseEther(withdrawAmount)
       });
-      
+
       await tx.wait();
       setWithdrawAmount("");
       setWithdrawAddress("");
@@ -188,7 +187,7 @@ function App() {
       </div>
 
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px" }}>
-        
+
         {/* Alerts */}
         {CONTRACT_ADDRESS === "YOUR_DEPLOYED_CONTRACT_ADDRESS" && (
           <div style={{ 
@@ -268,7 +267,7 @@ function App() {
 
         {account && (
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", gap: "24px", marginBottom: "40px" }}>
-            
+
             {/* Account Balance Card */}
             <div style={{ 
               background: "rgba(255, 255, 255, 0.95)",
@@ -505,13 +504,14 @@ function App() {
           padding: "20px"
         }}>
           <div style={{
-            background: "white",
-            padding: "40px",
-            borderRadius: "24px",
+            background: "linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(30, 41, 59, 0.95))",
+            padding: "48px",
+            borderRadius: "28px",
             width: "100%",
-            maxWidth: "480px",
-            boxShadow: "0 20px 60px rgba(0, 0, 0, 0.3)",
-            border: "1px solid rgba(255, 255, 255, 0.2)"
+            maxWidth: "520px",
+            boxShadow: "0 25px 80px rgba(0, 0, 0, 0.6)",
+            border: "1px solid rgba(34, 197, 94, 0.3)",
+            backdropFilter: "blur(20px)"
           }}>
             <div style={{ display: "flex", alignItems: "center", marginBottom: "24px" }}>
               <div style={{ 
@@ -527,10 +527,10 @@ function App() {
                 <span style={{ fontSize: "28px" }}>💰</span>
               </div>
               <div>
-                <h3 style={{ margin: "0", color: "#2d3436", fontSize: "1.5rem", fontWeight: "700" }}>
+                <h3 style={{ margin: "0", color: "#e2e8f0", fontSize: "1.5rem", fontWeight: "700" }}>
                   Deposit to Savings
                 </h3>
-                <p style={{ margin: "4px 0 0 0", color: "#636e72", fontSize: "1rem" }}>
+                <p style={{ margin: "4px 0 0 0", color: "#94a3b8", fontSize: "1rem" }}>
                   Move ETH to your savings account
                 </p>
               </div>
@@ -540,7 +540,7 @@ function App() {
                 display: "block", 
                 marginBottom: "12px", 
                 fontWeight: "600", 
-                color: "#2d3436",
+                color: "#e2e8f0",
                 fontSize: "1rem"
               }}>
                 Amount (ETH)
@@ -554,13 +554,15 @@ function App() {
                 style={{
                   width: "100%",
                   padding: "16px",
-                  border: "2px solid #e9ecef",
+                  border: "2px solid rgba(31, 41, 55, 0.5)",
                   borderRadius: "12px",
                   fontSize: "1.1rem",
                   outline: "none",
                   boxSizing: "border-box",
                   transition: "border-color 0.2s ease",
-                  fontFamily: "'JetBrains Mono', monospace"
+                  fontFamily: "'JetBrains Mono', monospace",
+                  background: "rgba(0, 0, 0, 0.2)",
+                  color: "#e2e8f0"
                 }}
               />
             </div>
@@ -570,13 +572,14 @@ function App() {
                 style={{
                   flex: "1",
                   padding: "16px",
-                  background: "#ddd6fe",
-                  color: "#5b21b6",
+                  background: "#475569",
+                  color: "#cbd5e1",
                   border: "none",
                   borderRadius: "12px",
                   cursor: "pointer",
                   fontSize: "1rem",
-                  fontWeight: "600"
+                  fontWeight: "600",
+                  transition: "all 0.2s ease"
                 }}
               >
                 Cancel
@@ -620,13 +623,14 @@ function App() {
           padding: "20px"
         }}>
           <div style={{
-            background: "white",
-            padding: "40px",
-            borderRadius: "24px",
+            background: "linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(30, 41, 59, 0.95))",
+            padding: "48px",
+            borderRadius: "28px",
             width: "100%",
-            maxWidth: "480px",
-            boxShadow: "0 20px 60px rgba(0, 0, 0, 0.3)",
-            border: "1px solid rgba(255, 255, 255, 0.2)"
+            maxWidth: "520px",
+            boxShadow: "0 25px 80px rgba(0, 0, 0, 0.6)",
+            border: "1px solid rgba(239, 68, 68, 0.3)",
+            backdropFilter: "blur(20px)"
           }}>
             <div style={{ display: "flex", alignItems: "center", marginBottom: "24px" }}>
               <div style={{ 
@@ -642,10 +646,10 @@ function App() {
                 <span style={{ fontSize: "28px" }}>📤</span>
               </div>
               <div>
-                <h3 style={{ margin: "0", color: "#2d3436", fontSize: "1.5rem", fontWeight: "700" }}>
+                <h3 style={{ margin: "0", color: "#e2e8f0", fontSize: "1.5rem", fontWeight: "700" }}>
                   Send Money
                 </h3>
-                <p style={{ margin: "4px 0 0 0", color: "#636e72", fontSize: "1rem" }}>
+                <p style={{ margin: "4px 0 0 0", color: "#94a3b8", fontSize: "1rem" }}>
                   Transfer ETH to another address
                 </p>
               </div>
@@ -655,7 +659,7 @@ function App() {
                 display: "block", 
                 marginBottom: "12px", 
                 fontWeight: "600", 
-                color: "#2d3436",
+                color: "#e2e8f0",
                 fontSize: "1rem"
               }}>
                 Recipient Address
@@ -668,13 +672,15 @@ function App() {
                 style={{
                   width: "100%",
                   padding: "16px",
-                  border: "2px solid #e9ecef",
+                  border: "2px solid rgba(31, 41, 55, 0.5)",
                   borderRadius: "12px",
                   fontSize: "1rem",
                   outline: "none",
                   boxSizing: "border-box",
                   fontFamily: "'JetBrains Mono', monospace",
-                  transition: "border-color 0.2s ease"
+                  transition: "border-color 0.2s ease",
+                  background: "rgba(0, 0, 0, 0.2)",
+                  color: "#e2e8f0"
                 }}
               />
             </div>
@@ -683,7 +689,7 @@ function App() {
                 display: "block", 
                 marginBottom: "12px", 
                 fontWeight: "600", 
-                color: "#2d3436",
+                color: "#e2e8f0",
                 fontSize: "1rem"
               }}>
                 Amount (ETH)
@@ -697,13 +703,15 @@ function App() {
                 style={{
                   width: "100%",
                   padding: "16px",
-                  border: "2px solid #e9ecef",
+                  border: "2px solid rgba(31, 41, 55, 0.5)",
                   borderRadius: "12px",
                   fontSize: "1.1rem",
                   outline: "none",
                   boxSizing: "border-box",
                   fontFamily: "'JetBrains Mono', monospace",
-                  transition: "border-color 0.2s ease"
+                  transition: "border-color 0.2s ease",
+                  background: "rgba(0, 0, 0, 0.2)",
+                  color: "#e2e8f0"
                 }}
               />
             </div>
@@ -713,8 +721,8 @@ function App() {
                 style={{
                   flex: "1",
                   padding: "16px",
-                  background: "#ddd6fe",
-                  color: "#5b21b6",
+                  background: "#475569",
+                  color: "#cbd5e1",
                   border: "none",
                   borderRadius: "12px",
                   cursor: "pointer",
